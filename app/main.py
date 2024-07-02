@@ -42,7 +42,7 @@ def main():
                         st = ok_response_pre + st
                         print(st)
                         client.send(st.encode())
-                    elif (paths == '/user_agent'):
+                    elif (paths == '/user-agent'):
                         st = read_data[-1]
                         print(st)
                         st = echo_helper(st)
