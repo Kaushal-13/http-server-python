@@ -31,14 +31,20 @@ def main():
             read_data = read_data.strip("/r/n")
             read_data = read_data.split(' ')
             file_name = read_data[1]
-            err = False
+            
             comms = file_name.split('/')
-            if (comms[1] == 'echo'):
+            if (len(comms) > 2 and comms[1] == 'echo'):
                 st = comms[2]
                 st = echo_helper(st)
                 st = ok_response + st
                 print(st)
                 client.send(st.encode())
+            elif(len(comms) == 1):
+                if(comms[0] == ''):
+                    client.send(ok_response.encode())
+
+                
+
             else:
                 client.send(error_response.encode())
 
