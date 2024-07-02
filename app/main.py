@@ -34,6 +34,8 @@ def main():
             print(read_data)
             action_name = read_data[1]
             print(action_name)
+            if (action_name == "/"):
+                client.send(ok_response.encode())
             for paths in acceptable_paths:
                 if (action_name.startswith(paths)):
                     if (paths == "/echo"):
@@ -49,8 +51,6 @@ def main():
                         st = ok_response_pre + st
                         print(st)
                         client.send(st.encode())
-                    elif (paths == '/'):
-                        client.send(ok_response.encode())
 
             else:
                 client.send(error_response.encode())
