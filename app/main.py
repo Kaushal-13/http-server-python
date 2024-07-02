@@ -45,7 +45,8 @@ def main():
             elif (len(comms) == 2):
                 if (comms[1] == ''):
                     client.send(ok_response.encode())
-
+                else:
+                    client.send(error_response.encode())
             else:
                 client.send(error_response.encode())
 
