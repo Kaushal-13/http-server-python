@@ -27,10 +27,8 @@ def main():
 
             print(f'Connection from {client},{addr}')
             data = client.recv(1024)
-            print(data)
             read_data = data.decode()
-            print(read_data)
-            read_data = read_data.strip("/r/n")
+            read_data = read_data.strip("\r\n")
             read_data = read_data.split(' ')
             print(read_data)
             action_name = read_data[1]
