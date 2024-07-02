@@ -26,7 +26,15 @@ def main():
             read_data = data.decode()
             read_data = read_data.strip("/r/n")
             read_data = read_data.split(' ')
-            print(read_data)
+            file_name = read_data[1]
+            err = False
+            if (file_name != '/index.html'):
+                err = True
+            if (err):
+                client.send(error_response.encode())
+            else:
+                client.send(ok_response.encode())
+
         finally:
             print("Done")
             client.close()
