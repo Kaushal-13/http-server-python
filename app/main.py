@@ -7,7 +7,7 @@ error_response = 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
 def echo_helper(string):
-    return f'Content-Type: text/plain\r\n Content-Length: {len(string)} \r\n\r\n {string}'
+    return f'Content-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n {string}'
 
 
 acceptable_paths = ['/']
