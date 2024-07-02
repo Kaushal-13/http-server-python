@@ -37,7 +37,7 @@ def main():
             for paths in acceptable_paths:
                 if (action_name.startswith(paths)):
                     if (paths == "/echo"):
-                        st = action_name.split('/')[1]
+                        st = action_name.split('/')[2]
                         st = echo_helper(st)
                         st = ok_response_pre + st
                         print(st)
