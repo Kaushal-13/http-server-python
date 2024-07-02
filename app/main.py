@@ -32,7 +32,9 @@ def main():
             print(read_data)
             read_data = read_data.strip("/r/n")
             read_data = read_data.split(' ')
+            print(read_data)
             action_name = read_data[1]
+            print(action_name)
             for paths in acceptable_paths:
                 if (action_name.startswith(paths)):
                     if (paths == "/"):
