@@ -33,10 +33,13 @@ def main():
             file_name = read_data[1]
             err = False
             comms = file_name.split('/')
-            if (comms[1] != 'echo'):
-                client.send(error_response.encode())
-            else:
+            if (comms[1] == 'echo'):
+                st = comms[2]
+                st = echo_helper(st)
+                st = ok_response + st
                 client.send(ok_response.encode())
+            else:
+                client.send(error_response.encode())
 
         finally:
             print("Done")
