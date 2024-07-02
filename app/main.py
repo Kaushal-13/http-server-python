@@ -25,6 +25,7 @@ def main():
             print(data)
             read_data = data.decode()
             read_data = read_data.strip("/r/n")
+            read_data = read_data.split(' ')
             print(read_data)
         finally:
             print("Done")
