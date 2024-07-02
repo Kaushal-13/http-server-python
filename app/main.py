@@ -36,9 +36,7 @@ def main():
             print(action_name)
             for paths in acceptable_paths:
                 if (action_name.startswith(paths)):
-                    if (paths == "/"):
-                        client.send(ok_response.encode())
-                    elif (paths == "/echo"):
+                    if (paths == "/echo"):
                         st = action_name.split('/')[1]
                         st = echo_helper(st)
                         st = ok_response_pre + st
@@ -46,6 +44,8 @@ def main():
                         client.send(st.encode())
                     elif (paths == '/user_agent'):
                         client.send(error_response.encode())
+                    else:
+                        client.send(ok_response.encode())
 
             else:
                 client.send(error_response.encode())
