@@ -49,7 +49,7 @@ def main():
                         st = ok_response_pre + st
                         print(st)
                         client.send(st.encode())
-                    else:
+                    elif (paths == '/'):
                         client.send(ok_response.encode())
 
             else:
