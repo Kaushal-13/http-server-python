@@ -31,10 +31,9 @@ def main():
             read_data = read_data.strip("/r/n")
             read_data = read_data.split(' ')
             file_name = read_data[1]
-            print(read_data)
             err = False
-            if (file_name != '/'):
-                err = True
+            comms = file_name.split('/')
+            print(comms)
             if (err):
                 client.send(error_response.encode())
             else:
