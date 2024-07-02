@@ -37,6 +37,7 @@ def main():
                 st = comms[2]
                 st = echo_helper(st)
                 st = ok_response + st
+                print(st)
                 client.send(st.encode())
             else:
                 client.send(error_response.encode())
