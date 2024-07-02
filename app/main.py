@@ -12,7 +12,7 @@ def echo_helper(string):
     return f'Content-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}'
 
 
-acceptable_paths = ['/']
+acceptable_paths = ['/', '/echo', '/user_agent']
 
 
 def main():
@@ -32,21 +32,20 @@ def main():
             print(read_data)
             read_data = read_data.strip("/r/n")
             read_data = read_data.split(' ')
-            file_name = read_data[1]
+            action_name = read_data[1]
+            for paths in acceptable_paths:
+                if (action_name.startswith(paths)):
+                    if (paths == "/"):
+                        client.send(ok_response.encode())
+                    elif (paths == "/echo"):
+                        st = action_name.split('/')[1]
+                        st = echo_helper(st)
+                        st = ok_response_pre + st
+                        print(st)
+                        client.send(st.encode())
+                    elif (paths == '/user_agent'):
+                        client.send(error_response.encode())
 
-            comms = file_name.split('/')
-            print(comms)
-            if (len(comms) > 2 and comms[1] == 'echo'):
-                st = comms[2]
-                st = echo_helper(st)
-                st = ok_response_pre + st
-                print(st)
-                client.send(st.encode())
-            elif (len(comms) == 2):
-                if (comms[1] == ''):
-                    client.send(ok_response.encode())
-                else:
-                    client.send(error_response.encode())
             else:
                 client.send(error_response.encode())
 
