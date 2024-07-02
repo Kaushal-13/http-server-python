@@ -8,9 +8,17 @@ def main():
 
     # Uncomment this to pass the first stage
     #
-    server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
-    client, addr = server_socket.accept()  # wait for client
-    client.send(b"HTTP/1.1 200 OK\r\n\r\n")
+    while True:
+        server_socket = socket.create_server(
+            ("localhost", 4221), reuse_port=True)
+        client, addr = server_socket.accept()  # wait for client
+
+        try:
+
+            print(f'Connection from {client},{addr}')
+
+        finally:
+            print("Done")
 
 
 if __name__ == "__main__":
