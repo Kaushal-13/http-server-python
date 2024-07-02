@@ -1,18 +1,21 @@
 # Uncomment this to pass the first stage
 import socket
-from io import BytesIO
 
 
 ok_response = 'HTTP/1.1 200 OK\r\n\r\n'
 error_response = 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
+def echo_helper(string):
+    return f'Content-Type: text/plain\r\n Content-Length: {len(string)} \r\n\r\n {string}'
+
+
+acceptable_paths = ['/']
+
+
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
-
-    # Uncomment this to pass the first stage
-    #
     while True:
         server_socket = socket.create_server(
             ("localhost", 4221), reuse_port=True)
@@ -24,6 +27,7 @@ def main():
             data = client.recv(1024)
             print(data)
             read_data = data.decode()
+            print(read_data)
             read_data = read_data.strip("/r/n")
             read_data = read_data.split(' ')
             file_name = read_data[1]
