@@ -24,8 +24,7 @@ def main():
             data = client.recv(1024)
             print(data)
             read_data = data.decode()
-            print(read_data[0])
-            print(read_data[1])
+            print([read_data])
         finally:
             print("Done")
             client.close()
