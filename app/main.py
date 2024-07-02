@@ -12,7 +12,7 @@ def echo_helper(string):
     return f'Content-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}'
 
 
-acceptable_paths = ['/', '/echo', '/user_agent']
+acceptable_paths = ['/echo', '/user-agent', '/']
 
 
 def main():
@@ -61,4 +61,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
