@@ -1,5 +1,6 @@
 # Uncomment this to pass the first stage
 import socket
+from io import BytesIO
 
 
 ok_response = 'HTTP/1.1 200 OK\r\n\r\n'
@@ -22,6 +23,8 @@ def main():
             print(f'Connection from {client},{addr}')
             data = client.recv(1024)
             print(data)
+            read_data = data.decode()
+            print(read_data)
         finally:
             print("Done")
             client.close()
