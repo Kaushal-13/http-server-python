@@ -2,7 +2,9 @@
 import socket
 
 
-ok_response = 'HTTP/1.1 200 OK\r\n'
+ok_response = 'HTTP/1.1 200 OK\r\n\r\n'
+ok_response_pre = 'HTTP/1.1 200 OK\r\n'
+
 error_response = 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
@@ -37,7 +39,7 @@ def main():
             if (len(comms) > 2 and comms[1] == 'echo'):
                 st = comms[2]
                 st = echo_helper(st)
-                st = ok_response + st
+                st = ok_response_pre + st
                 print(st)
                 client.send(st.encode())
             elif (len(comms) == 2):
