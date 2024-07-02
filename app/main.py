@@ -40,7 +40,7 @@ def main():
                 st = ok_response + st
                 print(st)
                 client.send(st.encode())
-            elif (len(comms) == 1):
+            elif (len(comms) == 2):
                 if (comms[0] == ''):
                     client.send(ok_response.encode())
 
