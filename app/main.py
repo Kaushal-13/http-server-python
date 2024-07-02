@@ -29,6 +29,7 @@ def main():
             data = client.recv(1024)
             read_data = data.decode()
             read_data = read_data.strip("\r\n")
+            print(read_data)
             read_data = read_data.split(' ')
             print(read_data)
             action_name = read_data[1]
