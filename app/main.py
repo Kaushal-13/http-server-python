@@ -23,17 +23,8 @@ def file_helper(string, file_size):
 acceptable_paths = ['/echo', '/user-agent', '/files', '/']
 
 
-def handle_client(client_socket):
+def handle_get(client_socket, read_data):
     try:
-
-        print(f'Connection from {client_socket.getpeername()}')
-        data = client_socket.recv(1024)
-        if not data:
-            return
-        read_data = data.decode().strip("\r\n")
-        print(read_data)
-        read_data = read_data.split(' ')
-        print(read_data)
         action_name = read_data[1]
         print(action_name)
 
@@ -79,6 +70,34 @@ def handle_client(client_socket):
                             print(f"File not found")
             else:
                 client_socket.send(error_response.encode())
+
+    except Exception as e:
+        print(f"Error handling client: {e}")
+    finally:
+
+        print("Request Managed")
+
+
+def handle_post(client_socket, read_data):
+    print(read_data)
+    client_socket.send(ok_response.encode())
+
+
+def handle_client(client_socket):
+    try:
+
+        print(f'Connection from {client_socket.getpeername()}')
+        data = client_socket.recv(1024)
+        if not data:
+            return
+        read_data = data.decode().strip("\r\n")
+        print(read_data)
+        read_data = read_data.split(' ')
+        print(read_data)
+        if (read_data[0] == "GET"):
+            handle_get(client_socket=client_socket, read_data=read_data)
+        elif (read_data[0] == "POST"):
+            handle_post(client_socket=client_socket, read_data=read_data)
 
     except Exception as e:
         print(f"Error handling client: {e}")
