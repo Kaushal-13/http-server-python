@@ -59,8 +59,8 @@ def handle_client(client_socket):
                         current_directory = os.getcwd()
                         print(f"Current directory: {current_directory}")
                         try:
-                            print(path)
-                            file_size = os.path.getsize(path)
+                            print(action_name)
+                            file_size = os.path.getsize(action_name)
                             print(file_size)
                             print(f"Size of the file is: {file_size} bytes")
                         except FileNotFoundError:
