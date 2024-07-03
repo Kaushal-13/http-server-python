@@ -10,7 +10,10 @@ error_response = 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
 def echo_helper(string, content_type="text/plain"):
-    return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\n\r\n{string}'
+    if (content_type == "text/plain"):
+        return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\n\r\n{string}'
+    elif (content_type == "application/octet-stream"):
+        return f'Content-Type: {content_type}\r\nContent-Length: {len(string.encode())}\r\n\r\n{string}'
 
 
 acceptable_paths = ['/echo', '/user-agent', '/files', '/']
