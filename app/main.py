@@ -71,9 +71,9 @@ def handle_client(client_socket):
                                 print("File Content")
                                 print(file_content)
                             my_string = file_helper(
-                                file_name, file_size=file_size)
+                                file_content, file_size=file_size)
                             message = ok_response_pre + my_string
-                            client_socket.send(message.encode)
+                            client_socket.send(message.encode())
 
                             print(f"Size of the file is: {file_size} bytes")
                         except FileNotFoundError:
