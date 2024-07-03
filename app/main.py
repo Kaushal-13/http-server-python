@@ -51,6 +51,7 @@ def handle_client(client_socket):
                         break
                     elif path == "/files":
                         st = action_name.split('/')[2]
+                        print(st)
                         st = echo_helper(
                             st, content_type="application/octet-stream")
                         st = ok_response_pre + st
