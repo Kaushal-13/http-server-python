@@ -59,13 +59,14 @@ def handle_client(client_socket):
                         current_directory = os.getcwd()
                         print(f"Current directory: {current_directory}")
                         try:
+                            print)
                             file_size = os.path.getsize(path)
                             print(file_size)
                             print(f"Size of the file is: {file_size} bytes")
                         except FileNotFoundError:
                             print(f"File not found: {st}")
                         st = echo_helper(
-                            st, content_type="application/octet-stream")
+                            st, content_type = "application/octet-stream")
                         st = ok_response_pre + st
                         print(st)
                         client_socket.send(st.encode())
@@ -91,7 +92,7 @@ def main():
         while True:
             client_socket, addr = server_socket.accept()
             client_thread = threading.Thread(
-                target=handle_client, args=(client_socket,))
+                target = handle_client, args = (client_socket,))
             client_thread.start()
     except KeyboardInterrupt:
         print("Server is shutting down...")
