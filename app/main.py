@@ -74,10 +74,9 @@ def handle_client(client_socket):
                                 file_content, file_size=file_size)
                             message = ok_response_pre + my_string
                             client_socket.send(message.encode())
-
                             print(f"Size of the file is: {file_size} bytes")
                         except FileNotFoundError:
-                            print(f"File not found: {st}")
+                            print(f"File not found")
             else:
                 client_socket.send(error_response.encode())
 
