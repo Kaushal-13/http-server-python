@@ -1,6 +1,7 @@
 # Uncomment this to pass the first stage
 import socket
 import threading
+import os
 
 
 ok_response = 'HTTP/1.1 200 OK\r\n\r\n'
@@ -13,6 +14,7 @@ def echo_helper(string, content_type="text/plain"):
     if (content_type == "text/plain"):
         return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\n\r\n{string}'
     elif (content_type == "application/octet-stream"):
+
         return f'Content-Type: {content_type}\r\nContent-Length: {len(string.encode())}\r\n\r\n{string}'
 
 
@@ -54,7 +56,12 @@ def handle_client(client_socket):
                         break
                     elif path == "/files":
                         st = action_name.split('/')[2]
-                        print(st)
+                        try:
+                            file_size = os.path.getsize(st)
+                            print(file_size)
+                            print(f"Size of the file is: {file_size} bytes")
+                        except FileNotFoundError:
+                            print(f"File not found: {st}")
                         st = echo_helper(
                             st, content_type="application/octet-stream")
                         st = ok_response_pre + st
