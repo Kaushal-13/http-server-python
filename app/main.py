@@ -57,7 +57,7 @@ def handle_client(client_socket):
                     elif path == "/files":
                         st = action_name.split('/')[2]
                         try:
-                            file_size = os.path.getsize(st)
+                            file_size = os.path.getsize(path)
                             print(file_size)
                             print(f"Size of the file is: {file_size} bytes")
                         except FileNotFoundError:
