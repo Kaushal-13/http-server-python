@@ -22,10 +22,10 @@ def main():
         server_socket = socket.create_server(
             ("localhost", 4221), reuse_port=True)
         server_socket.listen()
-        client, addr = server_socket.accept()  # wait for client
+       # wait for client
 
         try:
-
+            client, addr = server_socket.accept()
             print(f'Connection from {client},{addr}')
             data = client.recv(1024)
             read_data = data.decode()
