@@ -56,6 +56,8 @@ def handle_client(client_socket):
                         break
                     elif path == "/files":
                         st = action_name.split('/')[2]
+                        current_directory = os.getcwd()
+                        print(f"Current directory: {current_directory}")
                         try:
                             file_size = os.path.getsize(path)
                             print(file_size)
