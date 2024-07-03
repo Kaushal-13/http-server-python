@@ -15,50 +15,67 @@ def echo_helper(string):
 acceptable_paths = ['/echo', '/user-agent', '/']
 
 
-def main():
-    # You can use print statements as follows for debugging, they'll be visible when running tests.
-    print("Logs from your program will appear here!")
-    while True:
-        server_socket = socket.create_server(
-            ("localhost", 4221), reuse_port=True)
-        server_socket.listen()
-       # wait for client
+def handle_client(client_socket):
+    try:
+        print(f'Connection from {client_socket.getpeername()}')
+        data = client_socket.recv(1024)
+        if not data:
+            return
+        read_data = data.decode().strip("\r\n")
+        print(read_data)
+        read_data = read_data.split(' ')
+        print(read_data)
+        action_name = read_data[1]
+        print(action_name)
 
-        try:
-            client, addr = server_socket.accept()
-            print(f'Connection from {client},{addr}')
-            data = client.recv(1024)
-            read_data = data.decode()
-            read_data = read_data.strip("\r\n")
-            print(read_data)
-            read_data = read_data.split(' ')
-            print(read_data)
-            action_name = read_data[1]
-            print(action_name)
-            if (action_name == "/"):
-                client.send(ok_response.encode())
-            for paths in acceptable_paths:
-                if (action_name.startswith(paths)):
-                    if (paths == "/echo"):
+        if action_name == "/":
+            client_socket.send(ok_response.encode())
+        else:
+            for path in acceptable_paths:
+                if action_name.startswith(path):
+                    if path == "/echo":
                         st = action_name.split('/')[2]
                         st = echo_helper(st)
                         st = ok_response_pre + st
                         print(st)
-                        client.send(st.encode())
-                    elif (paths == '/user-agent'):
+                        client_socket.send(st.encode())
+                        break
+                    elif path == "/user-agent":
                         st = read_data[-1]
                         print(st)
                         st = echo_helper(st)
                         st = ok_response_pre + st
                         print(st)
-                        client.send(st.encode())
-
+                        client_socket.send(st.encode())
+                        break
             else:
-                client.send(error_response.encode())
+                client_socket.send(error_response.encode())
 
-        finally:
-            print("Done")
-            # client.close()
+    except Exception as e:
+        print(f"Error handling client: {e}")
+    finally:
+        client_socket.close()
+        print("Connection closed")
+
+
+def main():
+    # You can use print statements as follows for debugging, they'll be visible when running tests.
+    print("Logs from your program will appear here!")
+    server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
+    server_socket.listen()
+    print("Server is listening on localhost:4221")
+
+    try:
+        while True:
+            client_socket, addr = server_socket.accept()
+            client_thread = threading.Thread(
+                target=handle_client, args=(client_socket,))
+            client_thread.start()
+    except KeyboardInterrupt:
+        print("Server is shutting down...")
+    finally:
+        server_socket.close()
+        # client.close()
 
 
 if __name__ == "__main__":
