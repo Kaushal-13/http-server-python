@@ -9,8 +9,8 @@ ok_response_pre = 'HTTP/1.1 200 OK\r\n'
 error_response = 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
-def echo_helper(string):
-    return f'Content-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}'
+def echo_helper(string, content_type="text/plain"):
+    return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\n\r\n{string}'
 
 
 acceptable_paths = ['/echo', '/user-agent', '/files', '/']
@@ -49,6 +49,14 @@ def handle_client(client_socket):
                         print(st)
                         client_socket.send(st.encode())
                         break
+                    elif path == "/files":
+                        st = action_name.split('/')[2]
+                        st = echo_helper(
+                            st, content_type="application/octet-stream")
+                        st = ok_response_pre + st
+                        print(st)
+                        client_socket.send(st.encode())
+
             else:
                 client_socket.send(error_response.encode())
 
