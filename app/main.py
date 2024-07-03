@@ -58,7 +58,7 @@ def main():
 
         finally:
             print("Done")
-            client.close()
+            # client.close()
 
 
 if __name__ == "__main__":
