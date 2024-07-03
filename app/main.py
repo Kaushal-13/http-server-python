@@ -62,6 +62,7 @@ def handle_client(client_socket):
                         try:
                             print(action_name)
                             my_path = directory + action_name
+                            print(my_path)
                             file_size = os.path.getsize(my_path)
                             print(file_size)
                             print(f"Size of the file is: {file_size} bytes")
