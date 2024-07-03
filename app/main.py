@@ -13,7 +13,7 @@ def echo_helper(string):
     return f'Content-Type: text/plain\r\nContent-Length: {len(string)}\r\n\r\n{string}'
 
 
-acceptable_paths = ['/echo', '/user-agent', '/']
+acceptable_paths = ['/echo', '/user-agent', '/files', '/']
 
 
 def handle_client(client_socket):
