@@ -55,7 +55,7 @@ def handle_client(client_socket):
                         client_socket.send(st.encode())
                         break
                     elif path == "/files":
-                        directory = "/tmp"
+                        directory = "/tmp/data/codecrafters.io/http-server-tester"
                         st = action_name.split('/')[2]
                         current_directory = os.getcwd()
                         print(f"Current directory: {current_directory}")
