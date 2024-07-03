@@ -63,22 +63,21 @@ def handle_client(client_socket):
                         message = error_response
 
                         try:
-
                             file_name = action_name.split('/')[2]
                             my_path = directory + "/" + file_name
                             file_size = os.path.getsize(my_path)
-
-                            my_path = action_name
+                            with open(my_path, 'r') as file:
+                                file_content = file.read()
+                                print("File Content")
+                                print(file_content)
                             my_string = file_helper(
                                 file_name, file_size=file_size)
-
                             message = ok_response_pre + my_string
+                            client_socket.send(message.encode)
 
                             print(f"Size of the file is: {file_size} bytes")
                         except FileNotFoundError:
                             print(f"File not found: {st}")
-                        print(message)
-                        client_socket.send(message.encode())
             else:
                 client_socket.send(error_response.encode())
 
