@@ -2,6 +2,7 @@
 import socket
 import threading
 import os
+import argparse
 
 
 ok_response = 'HTTP/1.1 200 OK\r\n\r\n'
@@ -11,11 +12,12 @@ error_response = 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
 def echo_helper(string, content_type="text/plain"):
-    if (content_type == "text/plain"):
-        return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\n\r\n{string}'
-    elif (content_type == "application/octet-stream"):
+    return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\n\r\n{string}'
 
-        return f'Content-Type: {content_type}\r\nContent-Length: {len(string.encode())}\r\n\r\n{string}'
+
+def file_helper(string, file_size):
+    content_type = "application/octet-stream"
+    return f'Content-Type: {content_type}\r\nContent-Length: {file_size}\r\n\r\n{string}'
 
 
 acceptable_paths = ['/echo', '/user-agent', '/files', '/']
@@ -23,6 +25,7 @@ acceptable_paths = ['/echo', '/user-agent', '/files', '/']
 
 def handle_client(client_socket):
     try:
+
         print(f'Connection from {client_socket.getpeername()}')
         data = client_socket.recv(1024)
         if not data:
@@ -55,25 +58,26 @@ def handle_client(client_socket):
                         client_socket.send(st.encode())
                         break
                     elif path == "/files":
-                        directory = "/tmp/data/codecrafters.io/http-server-tester"
-                        st = action_name.split('/')[2]
-                        current_directory = os.getcwd()
-                        print(f"Current directory: {current_directory}")
+                        global base_directory
+                        directory = base_directory
+                        message = error_response
+
                         try:
                             print(action_name)
-                            my_path = directory + action_name
-                            print(my_path)
+                            file_name = action_name.split('/')[2]
+                            my_path = directory + "/" + file_name
                             file_size = os.path.getsize(my_path)
-                            print(file_size)
+                            print(file_name)
+                            my_path = action_name
+                            my_string = file_helper(
+                                file_name, file_size=file_size)
+                            print(my_string)
+                            message = ok_response_pre + my_string
+
                             print(f"Size of the file is: {file_size} bytes")
                         except FileNotFoundError:
                             print(f"File not found: {st}")
-                        st = echo_helper(
-                            st, content_type="application/octet-stream")
-                        st = ok_response_pre + st
-                        print(st)
-                        client_socket.send(st.encode())
-
+                        client_socket.send(message.encode())
             else:
                 client_socket.send(error_response.encode())
 
@@ -87,7 +91,15 @@ def handle_client(client_socket):
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
     print("Logs from your program will appear here!")
-    server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
+    parser = argparse.ArgumentParser(description="Simple HTTP Server")
+    parser.add_argument("--directory", type=str, required=False,
+                        help="Directory where files are stored")
+    args = parser.parse_args()
+
+    global base_directory
+    base_directory = args.directory
+
+    server_socket = socket.create_server(("localhost", 4221))
     server_socket.listen()
     print("Server is listening on localhost:4221")
 
@@ -101,7 +113,6 @@ def main():
         print("Server is shutting down...")
     finally:
         server_socket.close()
-        # client.close()
 
 
 if __name__ == "__main__":
