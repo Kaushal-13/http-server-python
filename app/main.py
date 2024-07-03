@@ -55,12 +55,14 @@ def handle_client(client_socket):
                         client_socket.send(st.encode())
                         break
                     elif path == "/files":
+                        directory = "/tmp/data/codecrafters.io/http-server-tester/"
                         st = action_name.split('/')[2]
                         current_directory = os.getcwd()
                         print(f"Current directory: {current_directory}")
                         try:
                             print(action_name)
-                            file_size = os.path.getsize(action_name)
+                            my_path = directory + action_name
+                            file_size = os.path.getsize(my_path)
                             print(file_size)
                             print(f"Size of the file is: {file_size} bytes")
                         except FileNotFoundError:
