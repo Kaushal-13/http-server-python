@@ -85,7 +85,7 @@ def create_file(file_path, text):
         # Ensure the directory exists
         global base_directory
         print(file_path.split("/"))
-        file_path = base_directory + "/" + file_path.split("/")[1]
+        file_path = base_directory + file_path.split("/")[2]
         print("File path")
         print(file_path)
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
