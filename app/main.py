@@ -8,6 +8,8 @@ import argparse
 ok_response = 'HTTP/1.1 200 OK\r\n\r\n'
 ok_response_pre = 'HTTP/1.1 200 OK\r\n'
 
+post_response = 'HTTP/1.1 201 Created\r\n\r\n'
+
 error_response = 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
@@ -78,9 +80,23 @@ def handle_get(client_socket, read_data):
         print("Request Managed")
 
 
+def create_file(file_path, text):
+    try:
+        with open(file_path, 'w') as file:
+            file.write(text)
+        print(f"File created and text written to {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
 def handle_post(client_socket, read_data):
     print(read_data)
-    client_socket.send(ok_response.encode())
+    path = read_data[1]
+    file_val = read_data[-1]
+    print(path)
+    print(file_val)
+    create_file(path, file_val)
+    client_socket.send(post_response.encode())
 
 
 def handle_client(client_socket):
@@ -95,19 +111,21 @@ def handle_client(client_socket):
 
         my_data = data.decode().split("\r\n")
         lis = []
-        for val in my_data:
-            a = val.split(" ")
-            for b in a:
-                lis.append(b)
+        print(my_data)
+        print(my_data)
+        for i in range(len(my_data)):
+            if (i == 0):
+                a = my_data[0].split(" ")
+                for b in a:
+                    lis.append(b)
+            else:
+                lis.append(my_data[i])
         print(lis)
-
-        print(read_data)
         read_data = read_data.split(' ')
-        print(read_data)
         if (read_data[0] == "GET"):
             handle_get(client_socket=client_socket, read_data=read_data)
         elif (read_data[0] == "POST"):
-            handle_post(client_socket=client_socket, read_data=read_data)
+            handle_post(client_socket=client_socket, read_data=lis)
 
     except Exception as e:
         print(f"Error handling client: {e}")
