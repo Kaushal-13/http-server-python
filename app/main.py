@@ -90,7 +90,17 @@ def handle_client(client_socket):
         data = client_socket.recv(1024)
         if not data:
             return
+
         read_data = data.decode().strip("\r\n")
+
+        my_data = data.decode().split("\r\n")
+        lis = []
+        for val in my_data:
+            a = val.split(" ")
+            for b in a:
+                lis.append(b)
+        print(lis)
+
         print(read_data)
         read_data = read_data.split(' ')
         print(read_data)
