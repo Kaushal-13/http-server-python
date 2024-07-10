@@ -82,6 +82,10 @@ def handle_get(client_socket, read_data):
 
 def create_file(file_path, text):
     try:
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        # Write the text to the file
         with open(file_path, 'w') as file:
             file.write(text)
         print(f"File created and text written to {file_path}")
