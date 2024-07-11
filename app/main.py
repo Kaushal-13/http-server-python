@@ -140,7 +140,6 @@ def handle_client(client_socket):
         my_data = data.decode().split("\r\n")
         lis = []
         print(my_data)
-        print(my_data)
         for i in range(len(my_data)):
             if (i == 0):
                 a = my_data[0].split(" ")
@@ -148,7 +147,10 @@ def handle_client(client_socket):
                     lis.append(b)
             else:
                 lis.append(my_data[i])
+        print("lis")
         print(lis)
+        print("My Data")
+        print(my_data)
         read_data = read_data.split(' ')
         if (read_data[0] == "GET"):
             handle_get(client_socket=client_socket, read_data=lis)
