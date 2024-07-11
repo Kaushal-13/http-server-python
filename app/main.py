@@ -29,9 +29,6 @@ def handle_get(client_socket, read_data):
     try:
         action_name = read_data[1]
         print(action_name)
-
-        if action_name == "/":
-            client_socket.send(ok_response.encode())
         compress = False
         enc = None
         for val in read_data:
@@ -41,6 +38,9 @@ def handle_get(client_socket, read_data):
                 enc = val.split(" ")[1]
                 print("Enc")
                 print(enc)
+
+        if action_name == "/":
+            client_socket.send(ok_response.encode())
         else:
             for path in acceptable_paths:
                 if action_name.startswith(path):
