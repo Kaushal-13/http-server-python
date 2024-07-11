@@ -37,7 +37,6 @@ def handle_get(client_socket, read_data):
         compress = False
         enc = None
         for val in read_data:
-            print(val)
             if (val.startswith("Accept-Encoding")):
                 compress = True
                 enc = val.split(" ")[1]
@@ -52,7 +51,7 @@ def handle_get(client_socket, read_data):
                 if action_name.startswith(path):
                     if path == "/echo":
                         st = action_name.split('/')[2]
-                        gt = ""
+
                         st = echo_helper(st)
                         if (compress == True):
                             st = echo_helper(st, compress=True, enc=enc)
@@ -62,7 +61,7 @@ def handle_get(client_socket, read_data):
                         client_socket.send(st.encode())
                         break
                     elif path == "/user-agent":
-                        st = read_data[-3]
+                        st = read_data[-3].split(" ")[1]
                         print(st)
                         st = echo_helper(st)
                         st = ok_response_pre + st
@@ -139,7 +138,6 @@ def handle_client(client_socket):
 
         my_data = data.decode().split("\r\n")
         lis = []
-        print(my_data)
         for i in range(len(my_data)):
             if (i == 0):
                 a = my_data[0].split(" ")
