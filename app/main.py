@@ -62,7 +62,7 @@ def handle_get(client_socket, read_data):
                         client_socket.send(st.encode())
                         break
                     elif path == "/user-agent":
-                        st = read_data[-1]
+                        st = read_data[-3]
                         print(st)
                         st = echo_helper(st)
                         st = ok_response_pre + st
