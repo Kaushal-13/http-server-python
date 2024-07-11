@@ -32,11 +32,22 @@ def handle_get(client_socket, read_data):
 
         if action_name == "/":
             client_socket.send(ok_response.encode())
+        compress = False
+        enc = None
+        for val in read_data:
+            if (val.startswith("Accept-Encoding: ")):
+                compress = True
+                enc = val.split(" ")[1]
+                print(enc)
         else:
             for path in acceptable_paths:
                 if action_name.startswith(path):
                     if path == "/echo":
+                        if (compress == True):
+                            pass
+
                         st = action_name.split('/')[2]
+
                         st = echo_helper(st)
                         st = ok_response_pre + st
                         print(st)
