@@ -35,6 +35,7 @@ def handle_get(client_socket, read_data):
         compress = False
         enc = None
         for val in read_data:
+            print(val)
             if (val.startswith("Accept-Encoding:")):
                 compress = True
                 enc = val.split(" ")[1]
