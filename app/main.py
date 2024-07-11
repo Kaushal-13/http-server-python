@@ -147,7 +147,7 @@ def handle_client(client_socket):
         print(lis)
         read_data = read_data.split(' ')
         if (read_data[0] == "GET"):
-            handle_get(client_socket=client_socket, read_data=read_data)
+            handle_get(client_socket=client_socket, read_data=lis)
         elif (read_data[0] == "POST"):
             handle_post(client_socket=client_socket, read_data=lis)
 
