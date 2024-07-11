@@ -53,12 +53,10 @@ def handle_get(client_socket, read_data):
                     if path == "/echo":
                         st = action_name.split('/')[2]
                         gt = ""
-
                         if (compress == True):
-
                             st = echo_helper(st, compress=True, enc=enc)
 
-                        st = ok_response_pre + st + gt
+                        st = ok_response_pre + st
                         print(st)
                         client_socket.send(st.encode())
                         break
