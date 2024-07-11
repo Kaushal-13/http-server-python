@@ -27,6 +27,8 @@ acceptable_paths = ['/echo', '/user-agent', '/files', '/']
 
 def handle_get(client_socket, read_data):
     try:
+        print("Read Data")
+        print(read_data)
         action_name = read_data[1]
         print(action_name)
         compress = False
