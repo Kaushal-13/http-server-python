@@ -13,7 +13,10 @@ post_response = 'HTTP/1.1 201 Created\r\n\r\n'
 error_response = 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 
-def echo_helper(string, content_type="text/plain"):
+def echo_helper(string, content_type="text/plain", compress=False, enc=None):
+    if (compress):
+        return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\nContent-Encoding: {enc}\r\n\r\n{string}'
+
     return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\n\r\n{string}'
 
 
@@ -50,9 +53,11 @@ def handle_get(client_socket, read_data):
                     if path == "/echo":
                         st = action_name.split('/')[2]
                         gt = ""
+
                         if (compress == True):
-                            gt = "Content-Encoding:" + enc
-                        st = echo_helper(st)
+
+                            st = echo_helper(st, compress=True, enc=enc)
+
                         st = ok_response_pre + st + gt
                         print(st)
                         client_socket.send(st.encode())
