@@ -57,6 +57,7 @@ def handle_get(client_socket, read_data):
                         print(st)
                         if (compress == True):
                             st = gzip.compress(bytes(st, 'utf-8'))
+                            print(st)
                             st = st[2:]
                             print(st)
                             st = echo_helper(st, compress=True, enc=enc)
