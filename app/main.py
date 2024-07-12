@@ -58,6 +58,7 @@ def handle_get(client_socket, read_data):
                         if (compress == True):
                             st = gzip.compress(st.encode())
                             st = echo_helper(st, compress=True, enc=enc)
+                            print(st)
                             st = ok_response_pre + st
                             client_socket.send(st.encode())
                             break
