@@ -3,6 +3,7 @@ import socket
 import threading
 import os
 import argparse
+import gzip
 
 
 ok_response = 'HTTP/1.1 200 OK\r\n\r\n'
@@ -54,7 +55,7 @@ def handle_get(client_socket, read_data):
                 if action_name.startswith(path):
                     if path == "/echo":
                         st = action_name.split('/')[2]
-
+                        st = gzip.compress(st)
                         st = echo_helper(st)
                         if (compress == True):
                             st = echo_helper(st, compress=True, enc=enc)
