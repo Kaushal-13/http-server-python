@@ -16,7 +16,7 @@ error_response = 'HTTP/1.1 404 Not Found\r\n\r\n'
 
 def echo_helper(string, content_type="text/plain", compress=False, enc=None):
     if (compress):
-        return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\nContent-Encoding: {enc}\r\n\r\n{string}'
+        return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\nContent-Encoding: {enc}\r\n\r\n'
 
     return f'Content-Type: {content_type}\r\nContent-Length: {len(string)}\r\n\r\n{string}'
 
@@ -58,10 +58,9 @@ def handle_get(client_socket, read_data):
                         if (compress == True):
                             st = gzip.compress(bytes(st, 'utf-8'))
                             print(st)
-                            st = echo_helper(st, compress=True, enc=enc)
-                            st = ok_response_pre + st
-
-                            client_socket.send(st.encode('utf-8'))
+                            d = echo_helper(st, compress=True, enc=enc)
+                            st = (ok_response_pre + d).encode() + st
+                            client_socket.send(st)
                             break
 
                         else:
