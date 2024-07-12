@@ -58,7 +58,10 @@ def handle_get(client_socket, read_data):
                         if (compress == True):
                             st = gzip.compress(st.encode())
                             print(st)
-
+                            formatted_bytes = ' '.join(
+                                format(byte, '02x') for byte in st)
+                            print(formatted_bytes)
+                            st = formatted_bytes
                             st = echo_helper(st, compress=True, enc=enc)
                             print(st)
                             st = ok_response_pre + st
