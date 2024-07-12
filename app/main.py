@@ -56,7 +56,9 @@ def handle_get(client_socket, read_data):
                     if path == "/echo":
                         st = action_name.split('/')[2]
                         if (compress == True):
-                            st = gzip.compress(st.encode())
+                            st = gzip.compress(st)
+                            print(st)
+
                             st = echo_helper(st, compress=True, enc=enc)
                             print(st)
                             st = ok_response_pre + st
