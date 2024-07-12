@@ -39,7 +39,6 @@ def handle_get(client_socket, read_data):
         enc = None
         for val in read_data:
             if (val.startswith("Accept-Encoding")):
-
                 enc_list = val.split(" ")
                 print(val)
                 for v2 in enc_list:
@@ -55,15 +54,10 @@ def handle_get(client_socket, read_data):
                 if action_name.startswith(path):
                     if path == "/echo":
                         st = action_name.split('/')[2]
+                        print(st)
                         if (compress == True):
                             st = gzip.compress(st.encode())
-                            print(st)
-                            formatted_bytes = ' '.join(
-                                format(byte, '02x') for byte in st)
-                            print(formatted_bytes)
-                            st = formatted_bytes
                             st = echo_helper(st, compress=True, enc=enc)
-                            print(st)
                             st = ok_response_pre + st
                             client_socket.send(st.encode())
                             break
