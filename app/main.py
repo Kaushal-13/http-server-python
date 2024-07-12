@@ -39,12 +39,12 @@ def handle_get(client_socket, read_data):
         for val in read_data:
             if (val.startswith("Accept-Encoding")):
 
-                enc = val.split(" ")
+                enc_list = val.split(" ")
                 print(val)
-                for v2 in enc:
+                for v2 in enc_list:
                     if (v2.startswith("gzip")):
                         compress = True
-
+                        enc = "gzip"
                 print(enc)
 
         if action_name == "/":
