@@ -57,13 +57,11 @@ def handle_get(client_socket, read_data):
                         print(st)
                         if (compress == True):
                             st = gzip.compress(bytes(st, 'utf-8'))
-                            st = str(st)
                             print(st)
                             st = echo_helper(st, compress=True, enc=enc)
                             st = ok_response_pre + st
-                            print(st)
-                            print(st.encode())
-                            client_socket.send(st.encode())
+
+                            client_socket.send(st.encode('utf-8'))
                             break
 
                         else:
