@@ -61,6 +61,8 @@ def handle_get(client_socket, read_data):
                             print(st)
                             st = echo_helper(st, compress=True, enc=enc)
                             st = ok_response_pre + st
+                            print(st)
+                            print(st.encode())
                             client_socket.send(st.encode())
                             break
 
