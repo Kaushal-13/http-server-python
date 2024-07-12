@@ -40,6 +40,7 @@ def handle_get(client_socket, read_data):
             if (val.startswith("Accept-Encoding")):
                 compress = True
                 enc = val.split(" ")[1]
+                print(val)
                 print(enc)
                 if (enc != "gzip"):
                     compress = False
